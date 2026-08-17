@@ -1,0 +1,32 @@
+<div class="summary-card">
+    <h3>📊 Enrollment Dashboard</h3>
+    
+    <div class="summary-stats">
+        <div class="stat-item">
+            <span class="stat-label">Total</span>
+            <span class="stat-value">{{ store.entities().length }}</span>
+        </div>
+        <div class="stat-item pending">
+            <span class="stat-label">Pending</span>
+            <span class="stat-value">{{ store.pendingCount() }}</span>
+        </div>
+        <div class="stat-item approved">
+            <span class="stat-label">Approved</span>
+            <span class="stat-value">{{ store.approvedCount() }}</span>
+        </div>
+        <div class="stat-item rejected">
+            <span class="stat-label">Rejected</span>
+            <span class="stat-value">{{ store.rejectedCount() }}</span>
+        </div>
+    </div>
+
+    @if (store.selectedEnrollment(); as selected) {
+        <div class="selected-info">
+            <h4>Selected Enrollment</h4>
+            <p>{{ selected.studentName }} - {{ selected.courseName }}</p>
+            <span class="status" [class]="selected.status.toLowerCase()">
+                {{ selected.status }}
+            </span>
+        </div>
+    }
+</div>

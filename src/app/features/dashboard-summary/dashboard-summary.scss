@@ -1,0 +1,89 @@
+.summary-card {
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+h3 {
+    color: #2c3e50;
+    margin-bottom: 16px;
+}
+
+.summary-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 8px;
+
+    &.pending {
+        background: #fff3cd;
+    }
+
+    &.approved {
+        background: #d4edda;
+    }
+
+    &.rejected {
+        background: #f8d7da;
+    }
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+.selected-info {
+    margin-top: 16px;
+    padding: 12px;
+    background: #e3f2fd;
+    border-radius: 8px;
+
+    h4 {
+        margin: 0 0 8px 0;
+        color: #1976d2;
+    }
+
+    p {
+        margin: 0 0 8px 0;
+        font-weight: 500;
+    }
+
+    .status {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+
+        &.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        &.approved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        &.rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    }
+}

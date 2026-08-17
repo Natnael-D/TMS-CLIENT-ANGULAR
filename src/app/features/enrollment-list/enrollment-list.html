@@ -1,0 +1,48 @@
+<h2>Enrollment List</h2>
+
+@if (store.isLoading()) {
+    <div class="loading">Loading enrollments...</div>
+}
+
+@if (store.error()) {
+    <div class="error">
+        {{ store.error() }}
+        <button (click)="store.clearError()">Dismiss</button>
+    </div>
+}
+
+<div class="summary-stats">
+    <span>Total: {{ store.entities().length }}</span>
+    <span class="pending">Pending: {{ store.pendingCount() }}</span>
+    <span class="approved">Approved: {{ store.approvedCount() }}</span>
+    <span class="rejected">Rejected: {{ store.rejectedCount() }}</span>
+</div>
+
+<div class="enrollment-list">
+    @for (enrollment of store.entities(); track enrollment.id) {
+        <div class="enrollment-card" 
+             [class.selected]="enrollment.id === store.selectedId()"
+             (click)="onSelect(enrollment.id)">
+            <div class="enrollment-info">
+                <span class="student-name">{{ enrollment.studentName }}</span>
+                <span class="course-name">{{ enrollment.courseName }}</span>
+                <span class="status" [class]="enrollment.status.toLowerCase()">
+                    {{ enrollment.status }}
+                </span>
+                <span class="date">{{ enrollment.enrolledAt | date:'short' }}</span>
+            </div>
+            <div class="actions">
+                @if (enrollment.status === 'Pending') {
+                    <button class="approve-btn" (click)="$event.stopPropagation(); onApprove(enrollment.id)">
+                        ✓ Approve
+                    </button>
+                    <button class="reject-btn" (click)="$event.stopPropagation(); onReject(enrollment.id)">
+                        ✗ Reject
+                    </button>
+                }
+            </div>
+        </div>
+    } @empty {
+        <div class="empty">No enrollments found.</div>
+    }
+</div>

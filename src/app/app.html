@@ -1,1 +1,15 @@
-<router-outlet />
+<div class="app-container">
+    <header class="app-header">
+        <h1>TMS - Training Management System</h1>
+        <nav>
+            <a routerLink="/dashboard">Dashboard</a>
+            <a routerLink="/enrollments">Enrollments</a>
+            <a routerLink="/enroll">Enroll</a>
+        </nav>
+    </header>
+    <main class="app-main">
+        <!-- Dashboard Summary shows on all pages -->
+        <tms-dashboard-summary />
+        <router-outlet />
+    </main>
+</div>
