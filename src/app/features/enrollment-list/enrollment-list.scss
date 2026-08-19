@@ -1,161 +1,108 @@
-h2 {
-    color: #2c3e50;
-    margin-bottom: 16px;
+table {
+    width: 100%;
 }
 
-.loading {
-    text-align: center;
-    padding: 20px;
-    color: #6c757d;
+.enrollment-header {
+    margin-bottom: 1.5rem;
+
+    h2 {
+        margin: 0 0 0.5rem;
+        font-size: 1.5rem;
+        color: #1e293b;
+    }
+}
+
+.action-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+    border: 1px solid #c7d2fe;
+    border-radius: 12px;
+}
+
+.action-desc {
+    margin: 0;
+    color: #475569;
+    font-size: 0.95rem;
+}
+
+.btn-new-enrollment {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.25rem;
+    background: #4f46e5;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+    white-space: nowrap;
+
+    &:hover {
+        background: #4338ca;
+        box-shadow: 0 2px 8px rgba(79, 70, 229, 0.35);
+    }
+
+    .btn-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.4rem;
+        height: 1.4rem;
+        background: rgba(255, 255, 255, 0.25);
+        border-radius: 50%;
+        font-size: 1.1rem;
+        line-height: 1;
+    }
+}
+
+.status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-badge.approved {
+    background: #065f46;
+    color: #a7f3d0;
+}
+
+.status-badge.pending {
+    background: #78350f;
+    color: #fde68a;
+}
+
+.status-badge.rejected {
+    background: #7f1d1d;
+    color: #fca5a5;
+}
+
+button {
+    padding: 0.4rem 1rem;
+    border: none;
+    border-radius: 6px;
+    background: #4f46e5;
+    color: white;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+button:hover {
+    background: #4338ca;
 }
 
 .error {
-    padding: 12px 16px;
+    padding: 12px;
     background: #f8d7da;
     color: #721c24;
     border-radius: 8px;
-    margin-bottom: 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    button {
-        background: #721c24;
-        color: white;
-        border: none;
-        padding: 4px 12px;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-}
-
-.summary-stats {
-    display: flex;
-    gap: 20px;
-    padding: 12px 0;
-    border-bottom: 1px solid #e9ecef;
-    margin-bottom: 16px;
-    font-weight: 500;
-
-    span {
-        padding: 4px 12px;
-        border-radius: 4px;
-        background: #f8f9fa;
-
-        &.pending {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        &.approved {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        &.rejected {
-            background: #f8d7da;
-            color: #721c24;
-        }
-    }
-}
-
-.enrollment-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 16px;
-    margin-bottom: 8px;
-    background: #f8f9fa;
-    border-radius: 8px;
-    border-left: 4px solid #6c757d;
-    transition: all 0.2s;
-    cursor: pointer;
-
-    &:hover {
-        background: #e9ecef;
-    }
-
-    &.selected {
-        background: #e3f2fd;
-        border-left-color: #1976d2;
-    }
-}
-
-.enrollment-info {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex: 1;
-    flex-wrap: wrap;
-}
-
-.student-name {
-    font-weight: 600;
-    color: #2c3e50;
-    min-width: 120px;
-}
-
-.course-name {
-    color: #495057;
-    min-width: 200px;
-}
-
-.status {
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 600;
-
-    &.pending {
-        background: #fff3cd;
-        color: #856404;
-    }
-
-    &.approved {
-        background: #d4edda;
-        color: #155724;
-    }
-
-    &.rejected {
-        background: #f8d7da;
-        color: #721c24;
-    }
-}
-
-.date {
-    font-size: 0.8rem;
-    color: #6c757d;
-}
-
-.actions {
-    display: flex;
-    gap: 8px;
-}
-
-.approve-btn, .reject-btn {
-    padding: 4px 12px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.85rem;
-
-    &:hover {
-        opacity: 0.8;
-    }
-}
-
-.approve-btn {
-    background: #28a745;
-    color: white;
-}
-
-.reject-btn {
-    background: #dc3545;
-    color: white;
-}
-
-.empty {
-    text-align: center;
-    padding: 40px;
-    color: #6c757d;
+    margin: 16px 0;
 }
