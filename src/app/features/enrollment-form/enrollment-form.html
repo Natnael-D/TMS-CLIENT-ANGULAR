@@ -2,10 +2,20 @@
 
 @if (submitted()) {
     <div class="success">
-        Enrollment submitted. Check the console for the payload.
+        Enrollment submitted successfully!
     </div>
 } @else {
     <form [formGroup]="form" (ngSubmit)="submit()">
+        <label for="studentName">Student Name</label>
+        <input
+            id="studentName"
+            formControlName="studentName"
+            placeholder="e.g. Liya Kebede"
+        />
+        @if (form.controls.studentName.touched && form.controls.studentName.invalid) {
+            <span class="error">Student name is required</span>
+        }
+
         <label for="studentId">Student ID</label>
         <input
             id="studentId"

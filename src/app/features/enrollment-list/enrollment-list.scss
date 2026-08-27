@@ -106,3 +106,12 @@ button:hover {
     border-radius: 8px;
     margin: 16px 0;
 }
+
+.no-data-row {
+    .no-data-cell {
+        padding: 2rem;
+        text-align: center;
+        color: #64748b;
+        font-style: italic;
+    }
+}

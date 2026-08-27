@@ -23,6 +23,8 @@ export interface EnrollmentState {
     isLoading: boolean;
     error: string | null;
     selectedId: string | null;
+    currentStudentId: number | null;
+    currentStudentName: string | null;
 }
 
 export const EnrollmentStore = signalStore(
@@ -33,12 +35,27 @@ export const EnrollmentStore = signalStore(
         isLoading: false,
         error: null,
         selectedId: null,
+        currentStudentId: null,
+        currentStudentName: null,
     }),
     
     // Entities
     withEntities<Enrollment>(),
     
     // Computed signals
+    withComputed((store) => ({
+        filteredEntities: computed(() => {
+            const studentId = store.currentStudentId();
+            if (studentId === null) {
+                return store.entities();
+            }
+            return store.entities().filter(e => e.studentId === studentId);
+        }),
+        selectedEnrollment: computed(() => {
+            const id = store.selectedId();
+            return store.entityMap()[id || ''] || null;
+        }),
+    })),
     withComputed((store) => ({
         pendingCount: computed(() => 
             store.entities().filter(e => e.status === 'Pending').length
@@ -49,23 +66,22 @@ export const EnrollmentStore = signalStore(
         rejectedCount: computed(() => 
             store.entities().filter(e => e.status === 'Rejected').length
         ),
-        selectedEnrollment: computed(() => {
-            const id = store.selectedId();
-            return store.entityMap()[id || ''] || null;
-        }),
     })),
     
     // Methods
     withMethods((store, api = inject(EnrollmentService)) => ({
-        // Load all enrollments
+        // Load all enrollments — merges with existing local entities
         loadEnrollments: rxMethod<void>(
             pipe(
                 tap(() => patchState(store, { isLoading: true, error: null })),
                 concatMap(() => 
                     api.getAll().pipe(
                         tap((rows) => {
+                            // Keep existing local entities whose IDs are not in the API response
+                            const existingIds = new Set(rows.map(r => r.id));
+                            const localOnly = store.entities().filter(e => !existingIds.has(e.id));
                             patchState(store, 
-                                setAllEntities(rows),
+                                setAllEntities([...rows, ...localOnly]),
                                 { isLoading: false }
                             );
                         }),
@@ -82,28 +98,9 @@ export const EnrollmentStore = signalStore(
         ),
         
         // Add new enrollment (optimistic)
-        addEnrollment: rxMethod<Enrollment>(
-            pipe(
-                tap((enrollment) => {
-                    patchState(store, addEntity(enrollment));
-                }),
-                concatMap((enrollment) => 
-                    // In real app, this would be a POST to create
-                    // For now, just simulate success
-                    api.getAll().pipe(
-                        tap(() => {
-                            // Success - keep the optimistic update
-                        }),
-                        catchError((err) => {
-                            // Rollback on error
-                            patchState(store, removeEntity(enrollment.id));
-                            patchState(store, { error: 'Failed to add enrollment' });
-                            return EMPTY;
-                        })
-                    )
-                )
-            )
-        ),
+        addEnrollment(enrollment: Enrollment) {
+            patchState(store, addEntity(enrollment));
+        },
         
         // Optimistic Approve
         approveEnrollment: rxMethod<string>(
@@ -175,6 +172,11 @@ export const EnrollmentStore = signalStore(
         // Clear error
         clearError() {
             patchState(store, { error: null });
+        },
+
+        // Set current student for filtering
+        setCurrentStudent(id: number, name: string) {
+            patchState(store, { currentStudentId: id, currentStudentName: name });
         },
     }))
 );
